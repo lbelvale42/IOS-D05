@@ -17,24 +17,24 @@ class FirstViewController: UIViewController, MKMapViewDelegate, CLLocationManage
     
     
     @IBOutlet weak var mapView: MKMapView!
-    @IBAction func mapModeChanged(sender: AnyObject) {
+    @IBAction func mapModeChanged(_ sender: AnyObject) {
         switch sender.selectedSegmentIndex {
         case 0:
-            mapView.mapType = .Standard
+            mapView.mapType = .standard
         case 1:
-            mapView.mapType = .Satellite
+            mapView.mapType = .satellite
         case 2:
-            mapView.mapType = .Hybrid
+            mapView.mapType = .hybrid
         default:
-            mapView.mapType = .Standard
+            mapView.mapType = .standard
         }
     }
 
-    @IBAction func geolocFunc(sender: AnyObject) {
+    @IBAction func geolocFunc(_ sender: AnyObject) {
         zoomToRegion(locationManager.location!)
     }
 
-    @IBAction func unWindSegue (segue: UIStoryboardSegue) {
+    @IBAction func unWindSegue (_ segue: UIStoryboardSegue) {
         if let i = indexToZoom {
             zoomToRegion(Points.points[i].location!)
         }
@@ -68,21 +68,21 @@ class FirstViewController: UIViewController, MKMapViewDelegate, CLLocationManage
         addPins()
     }
     
-    func zoomToRegion(location: CLLocation) {
+    func zoomToRegion(_ location: CLLocation) {
         let location = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
         let region = MKCoordinateRegionMakeWithDistance(location, 1000.0, 1000.0)
         mapView.setRegion(region, animated: true)
     }
 
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {}
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {}
 
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
         }
 
         let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             
